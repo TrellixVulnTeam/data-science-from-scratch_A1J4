@@ -20,6 +20,12 @@ mu_0, sigma_0 = inference.normal_approximation_to_binomial(1000, 0.5)
 
 two_sided_p_value(529.5, mu_0, sigma_0)   # 0.062
 
+upper_p_value = inference.normal_probability_above
+lower_p_value = inference.normal_probability_below
+
+upper_p_value(524.5, mu_0, sigma_0) # 0.061 accepting null hypothesis (> 5%)
+
+upper_p_value(526.5, mu_0, sigma_0) # 0.047 rejecting null hypothesis (< 5%)
 
 # experiment for the above mentioned results
 extreme_value_count = 0
