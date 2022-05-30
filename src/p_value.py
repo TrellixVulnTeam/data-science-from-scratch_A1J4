@@ -1,3 +1,4 @@
+import random
 import basics.inference as inference
 
 def two_sided_p_value(x: float, mu: float = 0, sigma: float = 1) -> float:
@@ -19,3 +20,15 @@ mu_0, sigma_0 = inference.normal_approximation_to_binomial(1000, 0.5)
 
 two_sided_p_value(529.5, mu_0, sigma_0)   # 0.062
 
+
+# experiment for the above mentioned results
+extreme_value_count = 0
+for _ in range(10000):
+    num_heads = sum(1 if random.random() < 0.5 else 0    # Count # of heads
+                    for _ in range(1000))                # in 1000 flips,
+    if num_heads >= 530 or num_heads <= 470:             # and count how often
+        extreme_value_count += 1                         # the # is 'extreme'
+
+# p-value was 0.062 => ~62 extreme values out of 1000
+assert 590 < extreme_value_count < 650, f"{extreme_value_count}"
+print("experiment succeeded")
