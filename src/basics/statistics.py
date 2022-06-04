@@ -1,7 +1,13 @@
 import math
 from typing import List
 from collections import Counter
-from basics.linear_algebra import sum_of_squares, dot
+from basics.linear_algebra import (
+    sum_of_squares,
+    dot, 
+    make_matrix, 
+    Vector, 
+    Matrix
+)
 
 
 def mean(xs: List[float]) -> float:
@@ -86,3 +92,14 @@ def correlation(xs: List[float], ys: List[float]) -> float:
         return covariance(xs, ys) / stdev_x / stdev_y
     else:
         return 0    # if no variation, correlation is zero
+
+
+def correlation_matrix(data: List[Vector]) -> Matrix:
+    """
+    Returns the len(data) x len(data) matrix whose (i, j)-th entry
+    is the correlation between data[i] and data[j]
+    """
+    def correlation_ij(i: int, j: int) -> float:
+        return correlation(data[i], data[j])
+    
+    return make_matrix(len(data), len(data), correlation_ij)
