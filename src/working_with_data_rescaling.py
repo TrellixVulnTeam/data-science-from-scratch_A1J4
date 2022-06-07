@@ -34,11 +34,16 @@ def rescale(data: List[Vector]) -> List[Vector]:
     return rescaled
 
 
-vectors = [[-3, -1, 1], [-1, 0, 1], [1, 1, 1]]
-means, stdevs = scale(vectors)
-assert means == [-1, 0, 1]
-assert stdevs == [2, 1, 0]
+def main():
+    vectors = [[-3., -1, 1], [-1., 0, 1], [1., 1, 1]]
+    means, stdevs = scale(vectors)
+    assert means == [-1, 0, 1]
+    assert stdevs == [2, 1, 0]
 
-means, stdevs = scale(rescale(vectors))
-assert means == [0, 0, 1]
-assert stdevs == [1, 1, 0]
+    means, stdevs = scale(rescale(vectors))
+    assert means == [0, 0, 1]
+    assert stdevs == [1, 1, 0]
+
+
+if __name__ == "__main__":
+   main()

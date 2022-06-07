@@ -92,14 +92,19 @@ def transform(data: List[Vector], components: List[Vector]) -> List[Vector]:
     return [transform_vector(v, components) for v in data]
 
 
-pca_data: List[Vector]
+def main():
+    pca_data: List[Vector]
 
-with open("data/pca_data.csv") as f:
-    reader = csv.reader(f)
-    pca_data = [[float(row[0]), float(row[1])] for row in reader]
+    with open("data/pca_data.csv") as f:
+        reader = csv.reader(f)
+        pca_data = [[float(row[0]), float(row[1])] for row in reader]
 
-de_meaned = de_mean(pca_data)
-fpc = first_principal_component(de_meaned)
+    de_meaned = de_mean(pca_data)
+    fpc = first_principal_component(de_meaned)
 
-assert 0.923 < fpc[0] < 0.925
-assert 0.382 < fpc[1] < 0.384
+    assert 0.923 < fpc[0] < 0.925
+    assert 0.382 < fpc[1] < 0.384
+
+
+if __name__ == "__main__":
+   main()

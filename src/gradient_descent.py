@@ -91,18 +91,23 @@ def stochastic_gradient_descent(dataset: List[Tuple],
     return theta
 
 
-# generating data to use it in gradient descent algorithm
-# x ranges from -50 to 49, y is always 20 * x + 5
-inputs = [(x, 20 * x + 5) for x in range(-50, 50)]
-learning_rate = 0.001
-# Start with random values for slope and intercept
-theta = [random.uniform(-1, 1), random.uniform(-1, 1)]
+def main():
+    # generating data to use it in gradient descent algorithm
+    # x ranges from -50 to 49, y is always 20 * x + 5
+    inputs = [(x, 20 * x + 5) for x in range(-50, 50)]
+    learning_rate = 0.001
+    # Start with random values for slope and intercept
+    theta = [random.uniform(-1, 1), random.uniform(-1, 1)]
 
 
-# theta = gradient_descent(inputs, theta, learning_rate, n_epochs=5000)
-theta = minibatch_gradient_descent(inputs, theta, learning_rate, batch_size=20, n_epochs=1000)
-# theta = stochastic_gradient_descent(inputs, theta, learning_rate, n_epochs=100)
+    # theta = gradient_descent(inputs, theta, learning_rate, n_epochs=5000)
+    theta = minibatch_gradient_descent(inputs, theta, learning_rate, batch_size=20, n_epochs=1000)
+    # theta = stochastic_gradient_descent(inputs, theta, learning_rate, n_epochs=100)
 
-slope, intercept = theta
-assert 19.9 < slope < 20.1, "slope should be about 20"
-assert 4.9 < intercept < 5.1, "intercept should be about 5"
+    slope, intercept = theta
+    assert 19.9 < slope < 20.1, "slope should be about 20"
+    assert 4.9 < intercept < 5.1, "intercept should be about 5"
+
+
+if __name__ == "__main__":
+   main()
