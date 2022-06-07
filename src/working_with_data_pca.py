@@ -69,10 +69,37 @@ def remove_projection_from_vector(v: Vector, w: Vector) -> Vector:
 def remove_projection(data: List[Vector], w: Vector) -> List[Vector]:
     return [remove_projection_from_vector(v, w) for v in data]
 
-pca_data: List[Vector] = []
+
+def pca(data: List[Vector], num_components: int) -> List[Vector]:
+    """ Returns first num_components principal components """
+    components: List[Vector] = []
+    for _ in range(num_components):
+        component = first_principal_component(data)
+        components.append(component)
+        data = remove_projection(data, component)
+
+    return components
+
+
+def transform_vector(v: Vector, components: List[Vector]) -> Vector:
+    return [dot(v, w) for w in components]
+
+
+def transform(data: List[Vector], components: List[Vector]) -> List[Vector]:
+    """ 
+    Transforms high-dimensional data into low-dimensional using extracted principal components 
+    """
+    return [transform_vector(v, components) for v in data]
+
+
+pca_data: List[Vector]
 
 with open("data/pca_data.csv") as f:
     reader = csv.reader(f)
     pca_data = [[float(row[0]), float(row[1])] for row in reader]
 
-print(pca_data)
+de_meaned = de_mean(pca_data)
+fpc = first_principal_component(de_meaned)
+
+assert 0.923 < fpc[0] < 0.925
+assert 0.382 < fpc[1] < 0.384
