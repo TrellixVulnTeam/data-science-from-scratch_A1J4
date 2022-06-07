@@ -24,3 +24,24 @@ def train_test_split(xs: List[X],
             [xs[i] for i in test_idxs],   # x_test
             [ys[i] for i in train_idxs],  # y_train
             [ys[i] for i in test_idxs])   # y_test
+
+
+def accuracy(tp: int, fp: int, fn: int, tn: int) -> float:
+    correct = tp + tn
+    total = tp + fp + fn + tn
+    return correct / total
+
+
+def precision(tp: int, fp: int) -> float:
+    return tp / (tp + fp)
+
+
+def recall(tp: int, fn: int) -> float:
+    return tp / (tp + fn)
+
+
+def f1_score(tp: int, fp: int, fn: int, tn: int) -> float:
+    p = precision(tp, fp, fn, tn)
+    r = recall(tp, fp, fn, tn)
+
+    return 2 * p * r / (p + r)
