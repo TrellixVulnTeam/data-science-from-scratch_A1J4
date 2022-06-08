@@ -41,7 +41,7 @@ def recall(tp: int, fn: int) -> float:
 
 
 def f1_score(tp: int, fp: int, fn: int, tn: int) -> float:
-    p = precision(tp, fp, fn, tn)
-    r = recall(tp, fp, fn, tn)
+    p = precision(tp, fp)
+    r = recall(tp, fn)
 
     return 2 * p * r / (p + r)
