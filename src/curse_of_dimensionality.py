@@ -1,6 +1,4 @@
-from cProfile import label
 import random
-from turtle import color
 import tqdm
 from typing import List
 
@@ -18,7 +16,7 @@ def random_distances(dim: int, num_pairs: int) -> List[float]:
             for _ in range(num_pairs)]
 
 
-def plot_min_and_avg(dimensions, avg_distances, min_distances):
+def plot_min_and_avg(dimensions: List[int], avg_distances: List[float], min_distances: List[float]):
     plt.title("10.000 Random Distances")
     plt.plot(dimensions, avg_distances, color="blue", label="average distance")
     plt.plot(dimensions, min_distances, color="green", label="minimum distance")
@@ -27,16 +25,16 @@ def plot_min_and_avg(dimensions, avg_distances, min_distances):
     plt.show()
 
 
-def plot_min_avg_ratio(dimensions, min_avg_ratio):
+def plot_min_avg_ratio(dimensions: List[int], min_avg_ratio: List[float]):
     plt.title("Minimum Distance / Average Distance")
-    plt.plot(dimensions, min_avg_ratio, color="blue", label="average distance")
+    plt.plot(dimensions, min_avg_ratio)
     plt.xlabel("# of dimensions")
     plt.legend()
     plt.show()
 
 
 def main():
-    dimensions = range(1, 101)
+    dimensions = list(range(1, 101))
     
     avg_distances = []
     min_distances = []
@@ -51,6 +49,8 @@ def main():
                      for min_dist, avg_dist in zip(min_distances, avg_distances)]
 
     # plot_min_and_avg(dimensions, avg_distances, min_distances)
+    plot_min_avg_ratio(dimensions, min_avg_ratio)
+
 
 if __name__ == "__main__":
    main()
