@@ -1,5 +1,6 @@
 import unittest
-import statistics
+
+import basics.statistics as statistics
 
 
 class TestStatistics(unittest.TestCase):
@@ -71,6 +72,7 @@ class TestStatistics(unittest.TestCase):
         result = set(statistics.mode(self.num_friends))
         expected_result = {1, 6}
         self.assertEqual(result, expected_result)
+
 
     def test_data_range(self):
         result = statistics.data_range(self.num_friends)

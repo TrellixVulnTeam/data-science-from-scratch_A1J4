@@ -1,5 +1,5 @@
 import unittest
-import linear_algebra
+import basics.linear_algebra as linear_algebra
 
 
 class TestLinearAlgebra(unittest.TestCase):
