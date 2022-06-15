@@ -3,7 +3,7 @@ import tqdm
 from typing import Tuple
 
 from basics.linear_algebra import Vector
-from basics.statistics import correlation, standard_deviation, mean, de_mean
+from basics.stats import correlation, standard_deviation, mean, de_mean
 from gradient_descent import gradient_step
 
 

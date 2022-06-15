@@ -1,6 +1,6 @@
 from typing import List, Tuple
 from basics.linear_algebra import Vector, vector_mean
-from basics.statistics import standard_deviation
+from basics.stats import standard_deviation
 
 
 def scale(data: List[Vector]) -> Tuple[Vector, Vector]:

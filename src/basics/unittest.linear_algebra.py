@@ -1,6 +1,6 @@
 import unittest
 
-import basics.linear_algebra as linear_algebra
+import linear_algebra
 
 
 class TestLinearAlgebra(unittest.TestCase):

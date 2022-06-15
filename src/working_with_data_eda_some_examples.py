@@ -4,7 +4,7 @@ import random
 from typing import List, Dict
 from collections import Counter
 from basics.probability import inverse_normal_cdf
-from basics.statistics import standard_deviation, mean, correlation
+from basics.stats import standard_deviation, mean, correlation
 
 random.seed(0)
 

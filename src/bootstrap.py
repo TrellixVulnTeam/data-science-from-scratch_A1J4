@@ -1,7 +1,7 @@
 import random
 from typing import List, TypeVar, Callable
 
-from basics.statistics import median, standard_deviation
+from basics.stats import median, standard_deviation
 
 X = TypeVar('X')        # Generic type for data
 Stat = TypeVar('Stat')  # Generic type for "statistic"
