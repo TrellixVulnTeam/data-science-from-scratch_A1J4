@@ -20,7 +20,6 @@ from basics.tensor import (
 from deep_learning import (
     Layer,
     Linear,
-    Momentum,
     Sequential,
     GradientDescent,
     SoftmaxCrossEntropy
@@ -42,19 +41,16 @@ class Vocabulary:
         for word in (words or []):     # If words were provided,
             self.add(word)             # add them.
 
-
     @property
     def size(self) -> int:
         """how many words are in the vocabulary"""
         return len(self.w2i)
-
 
     def add(self, word: str) -> None:
         if word not in self.w2i:        # If the word is new to us:
             word_id = len(self.w2i)     # Find the next id.
             self.w2i[word] = word_id    # Add to the word -> word_id map.
             self.i2w[word_id] = word    # Add to the word_id -> word map.
-
 
     def get_id(self, word: str) -> int:
         """return the id of the word (or None)"""
@@ -64,7 +60,6 @@ class Vocabulary:
         
         return id
 
-
     def get_word(self, word_id: int) -> str:
         """return the word with the given id (or None)"""
         word = self.i2w.get(word_id)
@@ -72,7 +67,6 @@ class Vocabulary:
             raise LookupError(f"Unknown word id {word_id}")
 
         return word
-
 
     def one_hot_encode(self, word: str) -> Tensor:
         word_id = self.get_id(word)
@@ -106,13 +100,11 @@ class Embedding(Layer):
         # Save last input id
         self.last_input_id = None
 
-
     def forward(self, input_id: int) -> Tensor:
         """Just select the embedding vector corresponding to the input id"""
         self.input_id = input_id    # remember for use in backpropagation
 
         return self.embeddings[input_id]
-
 
     def backward(self, gradient: Tensor) -> None:
         # Zero out the gradient corresponding to the last input.
@@ -124,10 +116,8 @@ class Embedding(Layer):
         self.last_input_id = self.input_id
         self.grad[self.input_id] = gradient
 
-
     def params(self) -> Iterable[Tensor]:
         return [self.embeddings]
-
 
     def grads(self) -> Iterable[Tensor]:
         return [self.grad]
@@ -141,11 +131,9 @@ class TextEmbedding(Embedding):
         # And hang onto the vocab
         self.vocab = vocab
 
-
     def __getitem__(self, word: str) -> Tensor:
         word_id = self.vocab.get_id(word)
         return self.embeddings[word_id]
-
 
     def closest(self, word: str, n: int = 5) -> List[Tuple[float, str]]:
         """Returns the n closest words based on cosine similarity"""

@@ -36,12 +36,10 @@ class KMeans:
         self.k = k                      # number of clusters
         self.means = None
 
-
     def classify(self, input: Vector) -> int:
         """return the index of the cluster closest to the input"""
         return min(range(self.k),
                    key=lambda i: squared_distance(input, self.means[i]))
-
 
     def train(self, inputs: List[Vector]) -> None:
         # Start with random assignments

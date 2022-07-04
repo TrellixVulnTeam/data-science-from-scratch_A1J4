@@ -24,18 +24,14 @@ class Table:
         self.types = types             # Data types of columns
         self.rows: List[Row] = []      # (no data yet)
 
-
     def __getitem__(self, idx: int) -> Row:
         return self.rows[idx]
-
 
     def __iter__(self) -> Iterator[Row]:
         return iter(self.rows)
 
-
     def __len__(self) -> int:
         return len(self.rows)
-
 
     def __repr__(self):
         """Pretty representation of the table: columns then rows"""
@@ -55,11 +51,9 @@ class Table:
         rows = "\n".join(rows)
         return f"{cols}\n{rows}"
 
-
     def col_to_type(self, col: str) -> type:
         idx = self.columns.index(col)      # Find the index of the column,
         return self.types[idx]             # and return its type.
-
 
     def insert(self, values: list) -> None:
         # Check for right # of values
@@ -73,7 +67,6 @@ class Table:
 
         # Add the corresponding dict as a "row"
         self.rows.append(dict(zip(self.columns, values)))
-
 
     def update(self,
                updates: Dict[str, Any],
@@ -93,11 +86,9 @@ class Table:
                 for column, new_value in updates.items():
                     row[column] = new_value
 
-
     def delete(self, predicate: WhereClause = lambda row: True) -> None:
         """Delete all rows matching predicate"""
         self.rows = [row for row in self.rows if not predicate(row)]
-
 
     def select(self,
                keep_columns: Optional[List[str]] = None,
@@ -129,7 +120,6 @@ class Table:
 
         return new_table
 
-
     def where(self, predicate: WhereClause = lambda row: True) -> 'Table':
         """Return only the rows that satisfy the supplied predicate"""
         where_table = Table(self.columns, self.types)
@@ -138,7 +128,6 @@ class Table:
                 values = [row[column] for column in self.columns]
                 where_table.insert(values)
         return where_table
-
 
     def limit(self, num_rows: int) -> 'Table':
         """Return only the first `num_rows` rows"""
@@ -149,7 +138,6 @@ class Table:
             values = [row[column] for column in self.columns]
             limit_table.insert(values)
         return limit_table
-
 
     def group_by(self,
                  group_by_columns: List[str],
@@ -179,12 +167,10 @@ class Table:
 
         return result_table
 
-
     def order_by(self, order: Callable[[Row], Any]) -> 'Table':
         new_table = self.select()       # make a copy
         new_table.rows.sort(key=order)
         return new_table
-
 
     def join(self, other_table: 'Table', left_join: bool = False) -> 'Table':
 
@@ -424,7 +410,6 @@ def main():
     )
     print(user_interest_counts)
     print()
-
 
     print("SELECT MIN(user_id) AS min_user_id FROM")
     print("(SELECT user_id FROM user_interests WHERE interest = 'SQL') sql_interests")

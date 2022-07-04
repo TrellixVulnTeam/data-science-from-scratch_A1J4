@@ -10,7 +10,6 @@ class StockPrice(NamedTuple):
     date: datetime.date
     closing_price: float
 
-
     def is_high_tech(self) -> bool:
         """It's a class, so we can add methods too"""
         return self.symbol in ['MSFT', 'GOOG', 'FB', 'AMZN', 'AAPL']

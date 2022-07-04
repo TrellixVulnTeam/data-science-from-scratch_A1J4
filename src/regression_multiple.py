@@ -6,7 +6,7 @@ from basics.linear_algebra import dot, Vector, vector_mean, add
 from basics.probability import normal_cdf
 from basics.stats import standard_deviation
 from gradient_descent import gradient_step
-from simple_linear_regression import total_sum_of_squares
+from regression_simple import total_sum_of_squares
 from bootstrap import bootstrap_statistic
 
 

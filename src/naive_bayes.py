@@ -38,7 +38,6 @@ class NaiveBayesClassifier:
         self.token_ham_counts: Dict[str, int] = defaultdict(int)
         self.spam_messages = self.ham_messages = 0
 
-
     def train(self, messages: Iterable[Message]) -> None:
         for message in messages:
             # Increment message counts
@@ -55,7 +54,6 @@ class NaiveBayesClassifier:
                 else:
                     self.token_ham_counts[token] += 1
 
-
     def _probabilities(self, token: str) -> Tuple[float, float]:
         """returns P(token | spam) and P(token | not spam)"""
         spam = self.token_spam_counts[token]
@@ -65,7 +63,6 @@ class NaiveBayesClassifier:
         p_token_ham = (ham + self.k) / (self.ham_messages + 2 * self.k)
 
         return p_token_spam, p_token_ham
-
 
     def predict(self, text: str) -> float:
         # taking into account that p_1 * ... * p_n = exp(log(p_1) + ... + log(p_n))

@@ -62,7 +62,6 @@ class Layer:
         """
         raise NotImplementedError
 
-
     def backward(self, gradient):
         """
         Similarly, we're not going to be prescriptive about what the
@@ -71,7 +70,6 @@ class Layer:
         """
         raise NotImplementedError
 
-
     def params(self) -> Iterable[Tensor]:
         """
         Returns the parameters of this layer. The default implementation
@@ -79,7 +77,6 @@ class Layer:
         you don't have to implement this.
         """
         return ()
-
 
     def grads(self) -> Iterable[Tensor]:
         """
@@ -97,7 +94,6 @@ class Sigmoid(Layer):
         self.sigmoids = tensor_apply(sigmoid, input)
         return self.sigmoids
 
-
     def backward(self, gradient: Tensor) -> Tensor:
         return tensor_combine(lambda sig, grad: sig * (1 - sig) * grad,
                               self.sigmoids,
@@ -110,7 +106,6 @@ class Tanh(Layer):
         self.tanh = tensor_apply(tanh, input)
         return self.tanh
 
-
     def backward(self, gradient: Tensor) -> Tensor:
         return tensor_combine(
             lambda tanh, grad: (1 - tanh ** 2) * grad,
@@ -122,7 +117,6 @@ class Relu(Layer):
     def forward(self, input: Tensor) -> Tensor:
         self.input = input
         return tensor_apply(lambda x: max(x, 0), input)
-
 
     def backward(self, gradient: Tensor) -> Tensor:
         return tensor_combine(lambda x, grad: grad if x > 0 else 0,
@@ -145,7 +139,6 @@ class Linear(Layer):
         # self.b[o] is the bias term for the o-th neuron
         self.b = random_tensor(output_dim, init=init)
 
-
     def forward(self, input: Tensor) -> Tensor:
         # Save the input to use in the backward pass.
         self.input = input
@@ -153,7 +146,6 @@ class Linear(Layer):
         # Return the vector of neuron outputs.
         return [dot(input, self.w[o]) + self.b[o]
                 for o in range(self.output_dim)]
-
 
     def backward(self, gradient: Tensor) -> Tensor:
         # Each b[o] gets added to output[o], which means
@@ -172,10 +164,8 @@ class Linear(Layer):
         return [sum(self.w[o][i] * gradient[o] for o in range(self.output_dim))
                 for i in range(self.input_dim)]
 
-
     def params(self) -> Iterable[Tensor]:
         return [self.w, self.b]
-
 
     def grads(self) -> Iterable[Tensor]:
         return [self.w_grad, self.b_grad]
@@ -185,7 +175,6 @@ class Dropout(Layer):
     def __init__(self, p: float) -> None:
         self.p = p
         self.train = True
-
 
     def forward(self, input: Tensor) -> Tensor:
         if self.train:
@@ -199,7 +188,6 @@ class Dropout(Layer):
         else:
             # During evaluation just scale down the outputs uniformly.
             return tensor_apply(lambda x: x * (1 - self.p), input)
-
 
     def backward(self, gradient: Tensor) -> Tensor:
         if self.train:
@@ -218,13 +206,11 @@ class Sequential(Layer):
     def __init__(self, layers: List[Layer]) -> None:
         self.layers = layers
 
-
     def forward(self, input):
         """Just forward the input through the layers in order."""
         for layer in self.layers:
             input = layer.forward(input)
         return input
-
 
     def backward(self, gradient):
         """Just backpropagate the gradient through the layers in reverse."""
@@ -232,11 +218,9 @@ class Sequential(Layer):
             gradient = layer.backward(gradient)
         return gradient
 
-
     def params(self) -> Iterable[Tensor]:
         """Just return the params from each layer."""
         return (param for layer in self.layers for param in layer.params())
-
 
     def grads(self) -> Iterable[Tensor]:
         """Just return the grads from each layer."""
@@ -265,7 +249,6 @@ class SSE(Loss):
         # And just add them up
         return tensor_sum(squared_errors)
 
-
     def gradient(self, predicted: Tensor, actual: Tensor) -> Tensor:
         return tensor_combine(
             lambda predicted, actual: 2 * (predicted - actual),
@@ -292,7 +275,6 @@ class SoftmaxCrossEntropy(Loss):
         # And then we just sum up the negatives.
         return -tensor_sum(likelihoods)
 
-
     def gradient(self, predicted: Tensor, actual: Tensor) -> Tensor:
         probabilities = softmax(predicted)
 
@@ -315,7 +297,6 @@ class GradientDescent(Optimizer):
     def __init__(self, learning_rate: float = 0.1) -> None:
         self.lr = learning_rate
 
-
     def step(self, layer: Layer) -> None:
         for param, grad in zip(layer.params(), layer.grads()):
             # Update param using a gradient step
@@ -332,7 +313,6 @@ class Momentum(Optimizer):
         self.lr = learning_rate
         self.mo = momentum
         self.updates: List[Tensor] = []  # running average
-
 
     def step(self, layer: Layer) -> None:
         # If we have no previous updates, start with all zeros.

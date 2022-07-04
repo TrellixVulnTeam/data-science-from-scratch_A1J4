@@ -36,56 +36,47 @@ class TestStatistics(unittest.TestCase):
         
         self.daily_hours = [dm / 60 for dm in self.daily_minutes]
 
-
     def test_mean(self):
         result = stats.mean(self.num_friends)
         expected_between = (7.3333, 7.3334)
         self.assertGreater(result, expected_between[0])
         self.assertLess(result, expected_between[1])
 
-
     def test_median_odd(self):
         result = stats.median([1, 10, 2, 9, 5])
         expected_result = 5
         self.assertEqual(result, expected_result)
-
 
     def test_median_even(self):
         result = stats.median([1, 9, 2, 10])
         expected_result = (2 + 9) / 2
         self.assertEqual(result, expected_result)
 
-    
     def test_median(self):
         result = stats.median(self.num_friends)
         expected_result = 6
         self.assertEqual(result, expected_result)
-
 
     def test_quantile(self):
         result = stats.quantile(self.num_friends, 0.75)
         expected_result = 9
         self.assertEqual(result, expected_result)
 
-
     def test_mode(self):
         result = set(stats.mode(self.num_friends))
         expected_result = {1, 6}
         self.assertEqual(result, expected_result)
-
 
     def test_data_range(self):
         result = stats.data_range(self.num_friends)
         expected_result = 99
         self.assertEqual(result, expected_result)
     
-
     def test_variance(self):
         result = stats.variance(self.num_friends)
         expected_between = (81.54, 81.55)
         self.assertGreater(result, expected_between[0])
         self.assertLess(result, expected_between[1])
-
 
     def test_standard_deviation(self):
         result = stats.standard_deviation(self.num_friends)
@@ -93,19 +84,16 @@ class TestStatistics(unittest.TestCase):
         self.assertGreater(result, expected_between[0])
         self.assertLess(result, expected_between[1])
  
-
     def test_interquartile_range(self):
         result = stats.interquartile_range(self.num_friends)
         expected_result = 6
         self.assertEqual(result, expected_result)
     
-
     def test_covariance(self):
         result = stats.covariance(self.num_friends, self.daily_minutes)
         expected_between = (22.42, 22.43)
         self.assertGreater(result, expected_between[0])
         self.assertLess(result, expected_between[1])
-
 
     def test_correlation(self):
         result = stats.correlation(self.num_friends, self.daily_minutes)

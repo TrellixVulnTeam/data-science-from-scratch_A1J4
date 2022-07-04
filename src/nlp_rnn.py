@@ -36,10 +36,8 @@ class SimpleRnn(Layer):
 
         self.reset_hidden_state()
 
-
     def reset_hidden_state(self) -> None:
         self.hidden = [0 for _ in range(self.hidden_dim)]
-
 
     def forward(self, input: Tensor) -> Tensor:
         self.input = input              # Save both input and previous
@@ -52,7 +50,6 @@ class SimpleRnn(Layer):
 
         self.hidden = tensor_apply(tanh, a)  # Apply tanh activation
         return self.hidden                   # and return the result.
-
 
     def backward(self, gradient: Tensor):
         # Backpropagate through the tanh
@@ -79,10 +76,8 @@ class SimpleRnn(Layer):
         return [sum(a_grad[h] * self.w[h][i] for h in range(self.hidden_dim))
                 for i in range(self.input_dim)]
 
-
     def params(self) -> Iterable[Tensor]:
         return [self.w, self.u, self.b]
-
 
     def grads(self) -> Iterable[Tensor]:
         return [self.w_grad, self.u_grad, self.b_grad]
