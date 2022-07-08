@@ -7,7 +7,8 @@ from typing import (
     Iterator,
     Sequence, 
     Callable,
-    Optional
+    Optional,
+    get_type_hints
 )
 
 # A few type aliases we'll use later
@@ -106,7 +107,7 @@ class Table:
 
         # This is how to get the return type from a type annotation.
         # It will crash if `calculation` doesn't have a return type.
-        add_types = [calculation.__annotations__['return']
+        add_types = [get_type_hints(calculation)['return']
                      for calculation in additional_columns.values()]
 
         # Create a new table for results
@@ -154,7 +155,7 @@ class Table:
         # Result table consists of group_by columns and aggregates
         new_columns = group_by_columns + list(aggregates.keys())
         group_by_types = [self.col_to_type(col) for col in group_by_columns]
-        aggregate_types = [agg.__annotations__['return']
+        aggregate_types = [get_type_hints(agg)['return']
                            for agg in aggregates.values()]
         result_table = Table(new_columns, group_by_types + aggregate_types)
 
